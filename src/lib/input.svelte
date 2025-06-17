@@ -27,7 +27,7 @@
     function handleInput(event, index) {
       const input = event.target;
       const val = input.value;
-      if (/^[0-9a-zA-Z]$/.test(val)) {
+      if (/^[0-9]$/.test(val)) {
         otp[index] = val;
         updateValue();
         if (index < length - 1) inputs[index + 1].focus();
@@ -54,7 +54,7 @@
         otp = Array(length).fill(""); // Reset after submission
         inputs.forEach(input => input.value = ""); // Clear inputs
         inputs[0].focus(); // Focus the first input
-      }
+      } 
     }
   
     function handlePaste(event) {
@@ -76,13 +76,16 @@
   <div class="otp-container" on:paste={handlePaste}>
     {#each Array(length) as _, i}
       <input
-        {disabled}
-        class="otp-input"
-        bind:this={inputs[i]}
-        maxlength="1"
-        on:input={e => handleInput(e, i)}
-        on:keydown={e => handleKeyDown(e, i)}
-        bind:value={otp[i]}
+      {disabled}
+      type="text"
+      inputmode="numeric" 
+      pattern="[0-9]*"
+      class="otp-input"
+      bind:this={inputs[i]}
+      maxlength="1"
+      on:input={e => handleInput(e, i)}
+      on:keydown={e => handleKeyDown(e, i)}
+      bind:value={otp[i]}
       />
     {/each}
   </div>
